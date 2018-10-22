@@ -4,15 +4,17 @@ import { createStackNavigator } from 'react-navigation'; // 2.17.0
 import ListaProduto from './components/ListaProduto';
 import ListaCliente from './components/ListaCliente';
 import ListaPedido from './components/ListaPedido'
+import Login from './components/Login'
 
 const RootStack = createStackNavigator(
   {
+    Home: Login,
     Produto: ListaProduto,
     Cliente: ListaCliente,
     Pedido : ListaPedido
     },
   {
-    initialRouteName: 'Cliente',
+    initialRouteName: 'Home',
   }
 );
 
