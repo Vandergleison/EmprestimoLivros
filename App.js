@@ -1,41 +1,23 @@
-import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { Constants } from 'expo';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { createStackNavigator } from 'react-navigation'; // 2.17.0
+import ListaProduto from './components/ListaProduto';
+import ListaCliente from './components/ListaCliente';
+import ListaPedido from './components/ListaPedido'
 
-// You can import from local files
-import AssetExample from './components/AssetExample';
-
-// or any pure javascript modules available in npm
-import { Card } from 'react-native-elements'; // Version can be specified in package.json
+const RootStack = createStackNavigator(
+  {
+    Produto: ListaProduto,
+    Cliente: ListaCliente,
+    Pedido : ListaPedido
+    },
+  {
+    initialRouteName: 'Cliente',
+  }
+);
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.paragraph}>
-          Change code in the editor and watch it change on your phone! Save to get a shareable url.
-        </Text>
-        <Card title="Local Modules">
-          <AssetExample />
-        </Card>
-      </View>
-    );
+    return <RootStack />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#34495e',
-  },
-});
