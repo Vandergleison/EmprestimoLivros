@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, AppRegistry, Image, Dimensions, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+//Implementar a função para integrar ao firebase e direcionar a página inicial do usuário cadastrado...
 const botaoPressionado = () => {
   Alert.alert('Fazendo login...');
 };
