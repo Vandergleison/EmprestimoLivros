@@ -7,15 +7,15 @@ import { Constants } from 'expo';
 import firebase from 'firebase';
 import config from './db';
 
-export default class CadastroPedido extends React.Component {
+export default class CadastroEmprestimo extends React.Component {
 
   constructor(props){
     super(props);
 
     let clienteSelecionado = this.props.navigation.getParam('clienteSel', 'NO-ID'); 
 
-    this.state = { produtos : [], 
-                  cliente: clienteSelecionado, 
+    this.state = { livros : [], 
+                  usuarios: clienteSelecionado, 
                   produtoSelecionado : '',
                   quantidade : 0}
   }
@@ -25,15 +25,15 @@ export default class CadastroPedido extends React.Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     }  
-    firebase.database().ref('produtos').on('value', (snapshot)=> {
-        var aProdutos = [];
+    firebase.database().ref('livros').on('value', (snapshot)=> {
+        var aLivros = [];
         snapshot.forEach( (child) => {
-          aProdutos.push ({
+          aLivros.push ({
             dados : child.val(),
             chave : child.key
           });
         });
-        this.setState({produtos : aProdutos});
+        this.setState({livros : aLivros});
     });
 
   }
@@ -41,7 +41,7 @@ export default class CadastroPedido extends React.Component {
   selecionaProduto(itemValue, itemIndex) {
     this.setState({ produtoSelecionado : itemValue});
 
-    console.log('Cliente selecionado: ' + this.state.cliente);
+    console.log('Cliente selecionado: ' + this.state.usuarios);
     console.log('Produto selecionado: ' + this.state.produtoSelecionado);
   }
 
@@ -50,21 +50,21 @@ export default class CadastroPedido extends React.Component {
       firebase.initializeApp(config);
     }
 
-    let pedido = {
-      idCliente : this.state.cliente,
+    let emprestimo = {
+      idCliente : this.state.usuarios,
       idProduto : this.state.produtoSelecionado,
       quantidade : this.state.quantidade,
-      situacao : 'Cancelado'
+      situacao : 'Em andamento'
     };
 
-    firebase.database().ref('pedidos').push(pedido)
-    Alert.alert('Pedido Realizado Com Sucesso');
+    firebase.database().ref('emprestimos').push(emprestimo)
+    Alert.alert('Empréstmo Realizado Com Sucesso');
     this.props.navigation.goBack();
   }
 
   render() {
 
-   const produtos = this.state.produtos;
+   const livros = this.state.livros;
 
     return (
       <View  style={styles.container}>
@@ -74,7 +74,7 @@ export default class CadastroPedido extends React.Component {
           
           onValueChange = {this.selecionaProduto.bind(this)}
           >
-            {produtos.map( (item) => 
+            {livros.map( (item) => 
               (<Picker.Item label={item.dados.nome} value={item.chave}/>
             ))
             }

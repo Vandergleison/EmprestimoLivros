@@ -21,7 +21,7 @@ export default class ListaLivros extends React.Component {
       firebase.initializeApp(config);
     } 
 
-    firebase.database().ref('produtos').on('value', (snapshot)=> {
+    firebase.database().ref('livros').on('value', (snapshot)=> {
         var aLivros = [];
         snapshot.forEach( (child) => {
           aLivros.push ({
@@ -40,7 +40,7 @@ export default class ListaLivros extends React.Component {
       firebase.initializeApp(config);
     } 
 
-    firebase.database().ref('produtos').orderByChild('nome').startAt(text).on('value',    (snapshot)=> {
+    firebase.database().ref('livros').orderByChild('nome').startAt(text).on('value',    (snapshot)=> {
         var aLivros = [];
         snapshot.forEach( (child) => {
           aLivros.push ({

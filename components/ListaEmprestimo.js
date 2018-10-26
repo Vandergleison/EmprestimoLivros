@@ -7,11 +7,11 @@ import { Constants } from 'expo';
 import firebase from 'firebase';
 import config from './db';
 
-export default class ListaPedido extends React.Component {
+export default class ListaEmprestimo extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { clientes : [], pedidos : [], clienteSelecionado : ''}
+    this.state = { usuarios : [], emprestimos : [], clienteSelecionado : ''}
   }
 
   componentDidMount(){
@@ -19,15 +19,15 @@ export default class ListaPedido extends React.Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     }  
-    firebase.database().ref('clientes').on('value', (snapshot)=> {
-        var aClientes = [];
+    firebase.database().ref('usuarios').on('value', (snapshot)=> {
+        var aUsuarios = [];
         snapshot.forEach( (child) => {
-          aClientes.push ({
+          aUsuarios.push ({
             dados : child.val(),
             chave : child.key
           });
         });
-        this.setState({clientes : aClientes});
+        this.setState({usuarios : aUsuarios});
     });
 
   }
@@ -40,30 +40,30 @@ export default class ListaPedido extends React.Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     }  
-    firebase.database().ref('pedidos')
-    .orderByChild('idCliente')
+    firebase.database().ref('emprestimos')
+    .orderByChild('idUsuario')
     .equalTo(itemValue)
     .on('value', (snapshot)=> {
-        var aPedidos = [];
+        var aEmprestimos = [];
         snapshot.forEach( (child) => {
-          aPedidos.push ({
+          aEmprestimos.push ({
             dados : child.val(),
             chave : child.key
           });
         });
-        this.setState({pedidos : []});
-        this.setState({pedidos : aPedidos});
+        this.setState({emprestimos : []});
+        this.setState({emprestimos : aEmprestimos});
 
-        console.log('X: ' + this.state.pedidos.length);
-        if(this.state.pedidos.length === 0 )
-          Alert.alert('Nenhum pedido encontrado!');
+        console.log('X: ' + this.state.emprestimos.length);
+        if(this.state.emprestimos.length === 0 )
+          Alert.alert('Nenhum Emprestimo encontrado!');
     });
   }
 
   render() {
 
-   const clientes = this.state.clientes;
-   const pedidos = this.state.pedidos;
+   const usuarios = this.state.usuarios;
+   const emprestimos = this.state.emprestimos;
 
     return (
       <View  style={styles.container}>
@@ -79,7 +79,7 @@ export default class ListaPedido extends React.Component {
         </Picker>
         
         <FlatList
-          data = {pedidos}
+          data = {emprestimos}
           keyExtractor = { item => item.dados.id} 
           renderItem = {
             ({item}) =>
@@ -91,7 +91,7 @@ export default class ListaPedido extends React.Component {
             </TouchableWithoutFeedback>
           }
         />
-        <Button onPress={() => this.props.navigation.navigate('NovoPedido', {'clienteSel' : this.state.clienteSelecionado})} title='Adicionar Pedido'> 
+        <Button onPress={() => this.props.navigation.navigate('NovoEmprestimo', {'clienteSel' : this.state.clienteSelecionado})} title='Solicitar Empréstimo'> 
         </Button>
       </View>
     );

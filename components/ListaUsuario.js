@@ -1,72 +1,87 @@
 import * as React from 'react';
-
-import { Text, View, Button, StyleSheet, FlatList, TouchableWithoutFeedback,ScrollView, TouchableOpacity } from 'react-native';
-import { Icon,  SearchBar } from 'react-native-elements';
+import { Text, View,ScrollView, Button, StyleSheet, FlatList, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { Icon, SearchBar } from 'react-native-elements';
 // import { Icon } from 'react-native-vector-icons';
 import { Constants } from 'expo';
-
+import ListaEmprestimo from './ListaPedido';
 import firebase from 'firebase';
 import config from './db';
 
-export default class ListaCliente extends React.Component {
+export default class ListaUsuario extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { clientes : []}  
+    this.state = { usuarios : [], clienteSelecionado: ''}
   }
-  
-  componentDidMount(){
 
+  componentDidMount(){
+    this.buscaClientes();
+  }
+
+  buscaClientes() {
+    console.log('Consultando ...');
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     } 
 
-    firebase.database().ref('clientes').on('value', (snapshot)=> {
-        var aTarefas = [];
+    firebase.database().ref('usuarios').on('value', (snapshot)=> {
+        var aUsuarios = [];
         snapshot.forEach( (child) => {
-          aTarefas.push ({
+          aUsuarios.push ({
             dados : child.val(),
             chave : child.key
           });
         });         
-        this.setState({tarefas : aTarefas});
+        this.setState({usuarios : aUsuarios});
     });
-
   }
 
   filtraClientes(text){
-   
+
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     } 
 
-    firebase.database().ref('clientes').orderByChild('nome').startAt(text).on('value',    (snapshot)=> {
-        var aTarefas = [];
-        snapshot.forEach( (child) => {
-          aTarefas.push ({
-            dados : child.val(),
-            chave : child.key
-          });
-        });         
-        this.setState({tarefas : aTarefas});
-    });
+    if(text.length > 0) {
+      firebase.database().ref('usuarios')
+      .orderByChild('nome')
+      .equalTo(text)
+      .on('value', (snapshot)=> {
+          var aUsuarios = [];
+          snapshot.forEach( (child) => {
+            aUsuarios.push ({
+              dados : child.val(),
+              chave : child.key
+            });
+          });         
+          this.setState({usuarios : aUsuarios});
+      });
+    }
+    else {
+      this.buscaClientes();
+    }
+
+    
   }
 
   render() {
 
-   const tarefasTemp = this.state.tarefas;
+   const usuarios = this.state.usuarios;
 
     return (
-      <ScrollView  style={styles.container}>
-        <Text style={styles.titulo}>Clientes</Text>
-        <View>
+      <View  style={styles.container}>
+      <ScrollView>
+        <Text style={styles.titulo}>Usuários</Text>
+        <Button onPress={this.props.navigation.navigate('Emprestimo')} title = 'Realizar Emprestimo'>
+        </Button>
         <SearchBar
+          lightTheme
+          ref={search => this.search = search}
           onChangeText={this.filtraClientes.bind(this)}
-          //onClear={someMethod}
-          placeholder='Digite sua pesquisa' /></View>
+          placeholder='Type Here...' />
 
         <FlatList
-          data = {tarefasTemp}
+          data = {usuarios}
           keyExtractor = { item => item.dados.id} 
           renderItem = {
             ({item}) =>
@@ -78,8 +93,9 @@ export default class ListaCliente extends React.Component {
             </TouchableWithoutFeedback>
           }
         />
-
-      </ScrollView>
+          
+        </ScrollView>
+      </View>
     );
   }
 }
