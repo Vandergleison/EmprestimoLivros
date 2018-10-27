@@ -1,66 +1,149 @@
 import React from 'react';
-import { Text, View, StyleSheet, AppRegistry, Image, Dimensions, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { View,
+         Text,
+         StyleSheet,
+         TextInput,
+         KeyboardAvoidingView,
+         TouchableOpacity,
+         AsyncStorage
+         
+} from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import firebase from 'firebase';
 
-//Implementar a função para integrar ao firebase e direcionar a página inicial do usuário cadastrado...
-const botaoPressionado = () => {
-  Alert.alert('Fazendo login...');
-};
-
+var config = {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
+  };
 
 export default class Login extends React.Component {
+  
+  constructor(props){
+      super(props);
+      this.state = {
+        username : '',
+        senha : '',
+      }
+  }
+  
+  componentDidMount (){
+    this._loadInitialState().done();
+  }
+  
+  _loadInitialState = async() =>{
+    
+    var value = await AsyncStorage.getItem('user');
+    if ( value !== null){
+      this.props.navigation.navigate('Profile');
+    
+    }
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Image source={''} style={styles.logo}/>
+      <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
+        <View style={styles.container}>
+            <Text style={styles.header}>Login</Text>
+            <TextInput style={styles.textInput} 
+              placeholder='Usuario' 
+              onChangeText={ (username) => this.setState ({username}) }
+              underlineColorAndroid='transparent'
+            />
+            <TextInput style={styles.textInput} 
+              placeholder='Senha' 
+              onChangeText={ (senha) => this.setState ({senha}) }
+              underlineColorAndroid='transparent'
+            />
+            <TouchableOpacity style={styles.btn} 
+              onPress={this.login}>
+              <Text style={styles.bt}>Login</Text>
+            </TouchableOpacity>
 
-        <View>
-          <TextInput 
-            underlineColorAndroid='transparent' 
-            placeholder='Login' 
-            style={styles.textInput}
-          />
+            <TouchableOpacity style={styles.btn} 
+              onPress={this.cadastro}>
+              <Text style={styles.bt}>Cadastro</Text>
+            </TouchableOpacity>
+            
         </View>
-
-         <View>
-          <TextInput underlineColorAndroid='transparent' placeholder='Senha' style={styles.textInput}/>
-        </View>
-
-        <View>
-          <TouchableOpacity onPress={botaoPressionado} style={styles.botao}>
-            <Text> ENTRAR </Text>
-          </TouchableOpacity>
-        </View>
-    </View>
-    )
+      </KeyboardAvoidingView>
+    );
   }
-}
+  cadastro = () =>{
+    this.props.navigation.navigate('Cadastro');
+  }
 
-const styles = StyleSheet.create({
-  container:{
-    backgroundColor: '#91b8da',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textInput:{
-    width: 300,
-    heigth: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    backgroundColor: 'white',
-    marginTop: 10
-  },
-  botao:{
-    backgroundColor: '#e88585',
-    paddingVertical: 10,
-    paddingHorizontal: 40,
-    margintTop: 20
-  },
-  logo:{
-    width: 200,
-    heigth: 200,
-    margin: 20
-  },
+  login = () => {
+      alert(this.state.username);
+   
+      fetch('http://192.168..:3000/users', {
+          method: 'Post',
+          headers:{
+              'Accept': 'aplication/json',
+              'Content-Type' : 'aplication/json',
+          },
+          body: JSON.stringify({
+              username: this.state.username,
+              senha: this.state.senha,
+          })
+             
+      })
+      .then((response) => response.json())
+      .then((res) => {
+        
+          if(res.sucess === true){
+              AsyncStorage.setItem('user',res.user);
+              this.props.navigation.navigate('Profile');
+          }
+          else{
+              alert(res.message);
+          }
+        
+      })
+      .done();
+  }
   
-});
+}
+const styles = StyleSheet.create({ 
+wrapper: {
+  flex: 1,
+},
+container : {
+  flex : 1,
+  justifyContent: 'center',
+  backgroundColor : '#2896d3',
+  paddingLeft: 40,
+  paddingRight: 40,
+  
+},
+header:{
+  fontSize: 24,
+  marginBottom: 60,
+  color: '#fff',
+  fontWeight : 'bold',
+  textAlign: 'center',
+},
+textInput : {
+  alingSelf: 'stretch',
+  padding : 16,
+  marginBottom : 20,
+  backgroundColor : '#fff', 
+  borderRadius: 10
+},
+btn : {
+  alingSelf: 'stretch',
+  padding : 20,
+  backgroundColor : '#01c853',
+  alingItems: 'center',
+  margin: 10,
+  borderRadius: 10,
+  
+},
+bt : {
+  textAlign: 'center',
+},
+
+});  
