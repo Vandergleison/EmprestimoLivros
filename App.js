@@ -6,6 +6,7 @@ import ListaUsuario from './components/ListaUsuario';
 import ListaEmprestimo from './components/ListaEmprestimo';
 import CadastroEmprestimo from './components/CadastroEmprestimo';
 import EnviaFoto from './components/EnviaFoto';
+import Login from './components/Login';
 
 const RootStack = createStackNavigator(
   {
@@ -13,7 +14,8 @@ const RootStack = createStackNavigator(
     Usuario: ListaUsuario,
     Emprestimo : ListaEmprestimo,
     Foto : EnviaFoto,
-    NovoEmprestimo: CadastroEmprestimo
+    NovoEmprestimo: CadastroEmprestimo,
+    Login: Login
     },
   {
     initialRouteName: 'Usuario',

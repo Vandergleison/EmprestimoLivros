@@ -5,7 +5,8 @@ import { View,
          TextInput,
          KeyboardAvoidingView,
          TouchableOpacity,
-         AsyncStorage
+         AsyncStorage,
+         Button
          
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
@@ -63,9 +64,11 @@ export default class Login extends React.Component {
               <Text style={styles.bt}>Login</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn} 
-              onPress={this.cadastro}>
-              <Text style={styles.bt}>Cadastro</Text>
+            <TouchableOpacity style={styles.btn}>
+              <Button 
+                onPress={this.cadastro}
+                style={styles.bt} title="Cadastro">
+              </Button>
             </TouchableOpacity>
             
         </View>
@@ -73,7 +76,7 @@ export default class Login extends React.Component {
     );
   }
   cadastro = () =>{
-    this.props.navigation.navigate('Cadastro');
+    this.props.navigation.navigate('Cadastrar');
   }
 
   login = () => {
