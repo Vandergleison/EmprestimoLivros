@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Picker, View, Button, StyleSheet, FlatList, TouchableWithoutFeedback, TouchableOpacity, Alert } from 'react-native';
+import { Text, Picker, KeyboardAvoidingView, View, Button, StyleSheet, FlatList, TouchableWithoutFeedback, TouchableOpacity, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
 // import { Icon } from 'react-native-vector-icons';
 import { Constants } from 'expo';
@@ -41,7 +41,7 @@ export default class ListaEmprestimo extends React.Component {
       firebase.initializeApp(config);
     }  
     firebase.database().ref('emprestimos')
-    .orderByChild('idUsuario')
+    .orderByChild('idUsuarios')
     .equalTo(itemValue)
     .on('value', (snapshot)=> {
         var aEmprestimos = [];
@@ -66,13 +66,15 @@ export default class ListaEmprestimo extends React.Component {
    const emprestimos = this.state.emprestimos;
 
     return (
-      <View  style={styles.container}>
+       <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
+      <View style={styles.container}>
+            <Text style={styles.header}>Lista de Empréstimos</Text>
         <Picker
           selectedValue={this.state.clienteSelecionado}
           style={{ height: 50, width: 200 }}
           onValueChange = {this.selecionaCliente.bind(this)}
           >
-            {clientes.map( (item) => 
+            {usuarios.map( (item) => 
               (<Picker.Item label={item.dados.nome} value={item.chave}/>
             ))
             }
@@ -91,44 +93,56 @@ export default class ListaEmprestimo extends React.Component {
             </TouchableWithoutFeedback>
           }
         />
-        <Button onPress={() => this.props.navigation.navigate('NovoEmprestimo', {'clienteSel' : this.state.clienteSelecionado})} title='Solicitar Empréstimo'> 
-        </Button>
+        <TouchableOpacity style={styles.btn}>
+              <Button 
+                onPress={() => this.props.navigation.navigate('NovoEmprestimo', {'clienteSel' : this.state.clienteSelecionado})}
+                style={styles.bt} title="Solicitar Empréstimo">
+              </Button>
+            </TouchableOpacity>
+        
       </View>
+      </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = StyleSheet.create({ 
+wrapper: {
+  flex: 1,
+},
 container : {
-  flex : 0,
-  // flexDirection : 'row',
-  backgroundColor : '#00ffff',
-  alignItems: 'center',
-  justifyContent: 'center'
-}, 
-items: {
-    flex: 1,
-    margin : 5,
-    padding : 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor : '#ffff00'
+  flex : 1,
+  justifyContent: 'center',
+  backgroundColor : '#2896d3',
+  paddingLeft: 40,
+  paddingRight: 40,
+  
 },
-titulo : {
-  fontSize : 50
+header:{
+  fontSize: 24,
+  marginBottom: 60,
+  color: '#fff',
+  fontWeight : 'bold',
+  textAlign: 'center',
 },
-botao : {
-   borderWidth:1,
-       borderColor:'rgba(0,0,0,0.2)',
-       alignItems:'center',
-       justifyContent:'center',
-       width:70,
-       position: 'absolute',
-       bottom: 10,
-       right: 10,
-       height:70,
-       backgroundColor:'#fff',
-       borderRadius:100,
-} 
-});
+textInput : {
+  alingSelf: 'stretch',
+  padding : 16,
+  marginBottom : 20,
+  backgroundColor : '#fff', 
+  borderRadius: 10
+},
+btn : {
+  alingSelf: 'stretch',
+  padding : 20,
+  backgroundColor : '#01c853',
+  alingItems: 'center',
+  margin: 10,
+  borderRadius: 10,
+  
+},
+bt : {
+  textAlign: 'center',
+},
+
+});  
