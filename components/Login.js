@@ -11,6 +11,7 @@ import { View,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import firebase from 'firebase';
+import styles from '../components/styles/Styles';
 
 var config = {
     apiKey: "",
@@ -110,43 +111,3 @@ export default class Login extends React.Component {
   }
   
 }
-const styles = StyleSheet.create({ 
-wrapper: {
-  flex: 1,
-},
-container : {
-  flex : 1,
-  justifyContent: 'center',
-  backgroundColor : '#2896d3',
-  paddingLeft: 40,
-  paddingRight: 40,
-  
-},
-header:{
-  fontSize: 24,
-  marginBottom: 60,
-  color: '#fff',
-  fontWeight : 'bold',
-  textAlign: 'center',
-},
-textInput : {
-  alingSelf: 'stretch',
-  padding : 16,
-  marginBottom : 20,
-  backgroundColor : '#fff', 
-  borderRadius: 10
-},
-btn : {
-  alingSelf: 'stretch',
-  padding : 20,
-  backgroundColor : '#01c853',
-  alingItems: 'center',
-  margin: 10,
-  borderRadius: 10,
-  
-},
-bt : {
-  textAlign: 'center',
-},
-
-});  

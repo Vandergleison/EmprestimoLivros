@@ -6,6 +6,7 @@ import { Constants } from 'expo';
 
 import firebase from 'firebase';
 import config from './db';
+import styles from '../components/styles/Styles';
 
 export default class ListaEmprestimo extends React.Component {
 

@@ -13,6 +13,7 @@ import { View,
 import { StackNavigator } from 'react-navigation';
 import firebase from 'firebase';
 import config from './db';
+import styles from '../components/styles/Styles';
 
 
 export default class CadastroUsuario extends React.Component {
@@ -72,7 +73,7 @@ export default class CadastroUsuario extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container2}>
             <Text style={styles.header}>Cadastro de Usuário</Text>
             <Text>Nome:</Text>
             <TextInput 
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
 wrapper: {
   flex: 1,
 },
-container : {
+container2 : {
   flex : 1,
   justifyContent: 'center',
   backgroundColor : '#2896d3',
