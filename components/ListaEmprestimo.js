@@ -68,7 +68,7 @@ export default class ListaEmprestimo extends React.Component {
 
     return (
        <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
-      <View style={styles.container}>
+      <View style={styles.container2}>
             <Text style={styles.header}>Lista de Empréstimos</Text>
         <Picker
           selectedValue={this.state.clienteSelecionado}
@@ -106,44 +106,3 @@ export default class ListaEmprestimo extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({ 
-wrapper: {
-  flex: 1,
-},
-container : {
-  flex : 1,
-  justifyContent: 'center',
-  backgroundColor : '#2896d3',
-  paddingLeft: 40,
-  paddingRight: 40,
-  
-},
-header:{
-  fontSize: 24,
-  marginBottom: 60,
-  color: '#fff',
-  fontWeight : 'bold',
-  textAlign: 'center',
-},
-textInput : {
-  alingSelf: 'stretch',
-  padding : 16,
-  marginBottom : 20,
-  backgroundColor : '#fff', 
-  borderRadius: 10
-},
-btn : {
-  alingSelf: 'stretch',
-  padding : 20,
-  backgroundColor : '#01c853',
-  alingItems: 'center',
-  margin: 10,
-  borderRadius: 10,
-  
-},
-bt : {
-  textAlign: 'center',
-},
-
-});  

@@ -48,7 +48,7 @@ export default class Login extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
-        <View style={styles.container}>
+        <View style={styles.container2}>
             <Text style={styles.header}>Login</Text>
             <TextInput style={styles.textInput} 
               placeholder='Usuario' 
