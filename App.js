@@ -7,6 +7,7 @@ import ListaEmprestimo from './components/ListaEmprestimo';
 import CadastroEmprestimo from './components/CadastroEmprestimo';
 import EnviaFoto from './components/EnviaFoto';
 import Login from './components/Login';
+import styles from '../components/styles/Styles';
 
 const RootStack = createStackNavigator(
   {
