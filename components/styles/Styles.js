@@ -1,4 +1,6 @@
 
+import {StyleSheet} from 'react-native';
+
 const styles = StyleSheet.create({ 
 
   /* Estilos de CadastroEmprestimo.js , ListaLivros.js , ListaUsuario */
