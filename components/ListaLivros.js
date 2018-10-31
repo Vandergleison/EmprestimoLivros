@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { Text, View, Button, StyleSheet, FlatList, TouchableWithoutFeedback,ScrollView, TouchableOpacity } from 'react-native';
 import { Icon,  SearchBar } from 'react-native-elements';
 // import { Icon } from 'react-native-vector-icons';
@@ -7,7 +6,7 @@ import { Constants } from 'expo';
 
 import firebase from 'firebase';
 import config from './db';
-import styles from '../components/styles/Styles';
+
 
 export default class ListaLivros extends React.Component {
 
@@ -41,7 +40,7 @@ export default class ListaLivros extends React.Component {
       firebase.initializeApp(config);
     } 
 
-    firebase.database().ref('livros').orderByChild('nome').startAt(text).on('value',    (snapshot)=> {
+    firebase.database().ref('livros').orderByChild('titulo').startAt(text).on('value',    (snapshot)=> {
         var aLivros = [];
         snapshot.forEach( (child) => {
           aLivros.push ({
@@ -73,7 +72,7 @@ export default class ListaLivros extends React.Component {
             ({item}) =>
             <TouchableWithoutFeedback >
             <View style={styles.items}>
-              <Text>{item.dados.nome}</Text>
+              <Text>{item.dados.titulo}</Text>
   
             </View>
             </TouchableWithoutFeedback>
@@ -84,3 +83,31 @@ export default class ListaLivros extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({ 
+
+  /* Estilos de CadastroEmprestimo.js , ListaLivros.js , ListaUsuario */
+
+    container : {
+      flex : 0,
+      // flexDirection : 'row',
+      backgroundColor : '#00ffff',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }, 
+    items: {
+        flex: 1,
+        margin : 5,
+        padding : 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor : '#ffff00'
+    },
+    titulo : {
+      fontSize : 32
+    },
+    
+
+});
+  

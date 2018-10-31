@@ -1,19 +1,17 @@
 import * as React from 'react';
-import { Text, View,ScrollView, Button, StyleSheet, FlatList, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { Text, View, Button, StyleSheet, FlatList, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { Icon, SearchBar } from 'react-native-elements';
 // import { Icon } from 'react-native-vector-icons';
 import { Constants } from 'expo';
-import ListaEmprestimo from './ListaPedido';
+
 import firebase from 'firebase';
 import config from './db';
-import styles from '../components/styles/Styles';
-
 
 export default class ListaUsuario extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { usuarios : [], clienteSelecionado: ''}
+    this.state = { usuarios : []}
   }
 
   componentDidMount(){
@@ -72,10 +70,8 @@ export default class ListaUsuario extends React.Component {
 
     return (
       <View  style={styles.container}>
-      <ScrollView>
         <Text style={styles.titulo}>Usuários</Text>
-        <Button onPress={this.props.navigation.navigate('Emprestimo')} title = 'Realizar Emprestimo'>
-        </Button>
+
         <SearchBar
           lightTheme
           ref={search => this.search = search}
@@ -95,9 +91,31 @@ export default class ListaUsuario extends React.Component {
             </TouchableWithoutFeedback>
           }
         />
-          
-        </ScrollView>
+
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({ 
+container : {
+  flex : 0,
+  // flexDirection : 'row',
+  backgroundColor : '#00ffff',
+  alignItems: 'center',
+  justifyContent: 'center'
+}, 
+items: {
+    flex: 1,
+    margin : 5,
+    padding : 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor : '#ffff00'
+},
+titulo : {
+  fontSize : 32
+},
+
+});

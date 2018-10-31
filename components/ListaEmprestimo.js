@@ -6,7 +6,6 @@ import { Constants } from 'expo';
 
 import firebase from 'firebase';
 import config from './db';
-import styles from '../components/styles/Styles';
 
 export default class ListaEmprestimo extends React.Component {
 
@@ -88,8 +87,8 @@ export default class ListaEmprestimo extends React.Component {
             ({item}) =>
             <TouchableWithoutFeedback >
             <View style={styles.items}>
-              <Text style={styles.titulo}>{item.dados.data}</Text>
-            <Text>{item.dados.quantidade}-{item.dados.situacao}</Text>  
+              <Text style={styles.titulo}>{item.dados.dataEmprest}</Text>
+            <Text>{item.dados.quantidade}-{item.dados.devolucao}</Text>  
             </View>
             </TouchableWithoutFeedback>
           }
@@ -106,3 +105,57 @@ export default class ListaEmprestimo extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({ 
+
+  /* Estilos de CadastroEmprestimo.js , ListaLivros.js , ListaUsuario */
+
+  
+    items: {
+        flex: 1,
+        margin : 5,
+        padding : 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor : '#ffff00'
+    },
+    titulo : {
+      fontSize : 32
+    },
+   
+        wrapper: {
+          flex: 1,
+        },
+        container2 : {
+          flex : 1,
+          justifyContent: 'center',
+          backgroundColor : '#2896d3',
+          paddingLeft: 40,
+          paddingRight: 40,
+          
+        },
+        header:{
+          fontSize: 24,
+          marginBottom: 60,
+          color: '#fff',
+          fontWeight : 'bold',
+          textAlign: 'center',
+        },
+        
+        btn : {
+          alingSelf: 'stretch',
+          padding : 20,
+          backgroundColor : '#01c853',
+          alingItems: 'center',
+          margin: 10,
+          borderRadius: 10,
+          
+        },
+        bt : {
+          textAlign: 'center',
+        },
+
+    
+
+    });

@@ -13,7 +13,6 @@ import { View,
 import { StackNavigator } from 'react-navigation';
 import firebase from 'firebase';
 import config from './db';
-import styles from '../components/styles/Styles';
 
 
 export default class CadastroUsuario extends React.Component {
@@ -21,13 +20,12 @@ export default class CadastroUsuario extends React.Component {
   constructor(props){
       super(props);
       this.state = {
-        usuarios : [],
         nome: '',
-        idade: '',
-        cidade: '',
-        estado: '',
-        username : '',
-        senha : '',
+        endereco : '',
+        areaInteresse: '',
+        username: '',
+        senha: '',
+        senhaConf : ''
       }
   }
   
@@ -55,13 +53,12 @@ export default class CadastroUsuario extends React.Component {
     }
 
     let usuario = {
-      idCliente : this.state.usuarios,
       nome: this.state.nome,
-      idade: this.state.idade,
-      cidade: this.state.cidade,
-      estado: this.state.estado,
+      endereco: this.state.endereco,
+      areaInteresse: this.state.areaInteresse,
       username: this.state.username,
-      senha: this.state.senha
+      senha: this.state.senha,
+      senhaConf: this.state.senhaConf
     };
 
     firebase.database().ref('usuarios').push(usuario)
@@ -75,7 +72,7 @@ export default class CadastroUsuario extends React.Component {
       <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
         <ScrollView style={styles.container2}>
             <Text style={styles.header}>Cadastro de Usuário</Text>
-            <Text>Nome:</Text>
+            <Text>Nome Completo:</Text>
             <TextInput 
               style={styles.textInput} 
               maxLength = "100"
@@ -83,36 +80,27 @@ export default class CadastroUsuario extends React.Component {
               onChangeText={ (nome) => this.setState ({nome}) }
               underlineColorAndroid='transparent'
             />
-            <Text>Idade:</Text>
+            <Text>Endereco:</Text>
             <TextInput 
               style={styles.textInput} 
-              keyboardType='numeric'
-              maxLength = "2"
-              placeholder='Idade' 
-              onChangeText={ (idade) => this.setState ({idade}) }
-              underlineColorAndroid='transparent'
-            />
-            <Text>Cidade:</Text>
-            <TextInput
-              maxLength = "50"
-              style={styles.textInput} 
-              placeholder='Cidade' 
-              onChangeText={ (cidade) => this.setState ({cidade}) }
-              underlineColorAndroid='transparent'
-            />
-            <Text>Estado:</Text>
-            <TextInput 
-              maxLength = "30"
-              style={styles.textInput} 
-              placeholder='Estado' 
-              onChangeText={ (estado) => this.setState ({estado}) }
-              underlineColorAndroid='transparent'
-            />
-            <Text>Email:</Text>
-            <TextInput 
               maxLength = "100"
+              placeholder='Endereçco' 
+              onChangeText={ (endereco) => this.setState ({endereco}) }
+              underlineColorAndroid='transparent'
+            />
+            <Text>Area de Interesse:</Text>
+            <TextInput 
               style={styles.textInput} 
-              placeholder='Exemplo@exemplo.com' 
+              maxLength = "100"
+              placeholder='Área' 
+              onChangeText={ (areaInteresse) => this.setState ({areaInteresse}) }
+              underlineColorAndroid='transparent'
+            />
+            <Text>Nome do Usuário:</Text>
+            <TextInput 
+              style={styles.textInput} 
+              maxLength = "100"
+              placeholder='Usuário' 
               onChangeText={ (username) => this.setState ({username}) }
               underlineColorAndroid='transparent'
             />
@@ -122,6 +110,15 @@ export default class CadastroUsuario extends React.Component {
               style={styles.textInput} 
               placeholder='xxxxxxxx' 
               onChangeText={ (senha) => this.setState ({senha}) }
+              underlineColorAndroid='transparent'
+            />
+
+            <Text>Confirme Senha:</Text>
+            <TextInput 
+              maxLength = "8"
+              style={styles.textInput} 
+              placeholder='*******' 
+              onChangeText={ (username) => this.setState ({username}) }
               underlineColorAndroid='transparent'
             />
 
@@ -135,43 +132,52 @@ export default class CadastroUsuario extends React.Component {
     );
   }
 }
-const styles = StyleSheet.create({ 
-wrapper: {
-  flex: 1,
-},
-container2 : {
-  flex : 1,
-  justifyContent: 'center',
-  backgroundColor : '#2896d3',
-  paddingLeft: 40,
-  paddingRight: 40,
-  
-},
-header:{
-  fontSize: 24,
-  marginBottom: 60,
-  color: '#fff',
-  fontWeight : 'bold',
-  textAlign: 'center',
-},
-textInput : {
-  alingSelf: 'stretch',
-  padding : 16,
-  marginBottom : 20,
-  backgroundColor : '#fff', 
-  borderRadius: 10
-},
-btn : {
-  alingSelf: 'stretch',
-  padding : 20,
-  backgroundColor : '#01c853',
-  alingItems: 'center',
-  margin: 10,
-  borderRadius: 10,
-  
-},
-bt : {
-  textAlign: 'center',
-},
 
-});  
+const styles = StyleSheet.create({ 
+
+  /* Estilos de CadastroEmprestimo.js , ListaLivros.js , ListaUsuario */
+
+    
+    /* Estilos de CadastroUsuario.js , ListaEmprestimos , Login */
+
+        wrapper: {
+          flex: 1,
+        },
+        container2 : {
+          flex : 1,
+          justifyContent: 'center',
+          backgroundColor : '#2896d3',
+          paddingLeft: 40,
+          paddingRight: 40,
+          
+        },
+        header:{
+          fontSize: 24,
+          marginBottom: 60,
+          color: '#fff',
+          fontWeight : 'bold',
+          textAlign: 'center',
+        },
+        textInput : {
+          alingSelf: 'stretch',
+          padding : 16,
+          marginBottom : 20,
+          backgroundColor : '#fff', 
+          borderRadius: 10
+        },
+        btn : {
+          alingSelf: 'stretch',
+          padding : 20,
+          backgroundColor : '#01c853',
+          alingItems: 'center',
+          margin: 10,
+          borderRadius: 10,
+          
+        },
+        bt : {
+          textAlign: 'center',
+        },
+
+    
+
+    });

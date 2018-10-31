@@ -1,25 +1,37 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { createStackNavigator } from 'react-navigation'; // 2.17.0
+import {StackNavigator } from 'react-navigation'; // 2.17.0
 import ListaLivros from './components/ListaLivros';
 import ListaUsuario from './components/ListaUsuario';
 import ListaEmprestimo from './components/ListaEmprestimo';
 import CadastroEmprestimo from './components/CadastroEmprestimo';
 import EnviaFoto from './components/EnviaFoto';
 import Login from './components/Login';
-import styles from '../components/styles/Styles';
+import CadastroUsuario from './components/CadastroUsuario';
 
-const RootStack = createStackNavigator(
+const RootStack = StackNavigator(
   {
-    Livros: ListaLivros,
-    Usuario: ListaUsuario,
-    Emprestimo : ListaEmprestimo,
-    Foto : EnviaFoto,
-    NovoEmprestimo: CadastroEmprestimo,
-    Login: Login
+    Lisvros: {
+      screen: ListaLivros,
     },
+    Emprestimos: {
+      screen: ListaEmprestimo,
+    },
+    Login: {
+      screen: Login,
+    },
+    Cadastrar: {
+      screen: CadastroUsuario,
+    },
+    NovoEmprestimo: {
+      screen: CadastroEmprestimo,
+    },
+    Usuarios: {
+      screen: ListaUsuario,
+    }
+  },
   {
-    initialRouteName: 'Usuario',
+    initialRouteName: 'Login',
   }
 );
 

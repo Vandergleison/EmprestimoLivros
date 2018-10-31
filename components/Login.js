@@ -6,12 +6,12 @@ import { View,
          KeyboardAvoidingView,
          TouchableOpacity,
          AsyncStorage,
-         Button
+         Button,
+         Image
          
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import firebase from 'firebase';
-import styles from '../components/styles/Styles';
 
 var config = {
     apiKey: "",
@@ -49,7 +49,8 @@ export default class Login extends React.Component {
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
         <View style={styles.container2}>
-            <Text style={styles.header}>Login</Text>
+         
+            <Image source={require('assets/logo.png')} style={styles.logo}/>
             <TextInput style={styles.textInput} 
               placeholder='Usuario' 
               onChangeText={ (username) => this.setState ({username}) }
@@ -111,3 +112,58 @@ export default class Login extends React.Component {
   }
   
 }
+
+const styles = StyleSheet.create({ 
+
+  /* Estilos de CadastroEmprestimo.js , ListaLivros.js , ListaUsuario */
+
+    
+    /* Estilos de CadastroUsuario.js , ListaEmprestimos , Login */
+
+        wrapper: {
+          flex: 1,
+        },
+        container2 : {
+          flex : 1,
+          justifyContent: 'center',
+          backgroundColor : '#2896d3',
+          paddingLeft: 40,
+          paddingRight: 40,
+          
+        },
+        header:{
+          fontSize: 24,
+          marginBottom: 60,
+          color: '#fff',
+          fontWeight : 'bold',
+          textAlign: 'center',
+        },
+        textInput : {
+          alingSelf: 'stretch',
+          padding : 16,
+          marginBottom : 20,
+          backgroundColor : '#fff', 
+          borderRadius: 10
+        },
+        btn : {
+          alingSelf: 'stretch',
+          padding : 20,
+          backgroundColor : '#01c853',
+          alingItems: 'center',
+          margin: 10,
+          borderRadius: 10,
+          
+        },
+        logo:{
+        width: 161,
+        heigth: 215,
+        margin: 10,
+        marginLeft: 65
+  },
+        bt : {
+          textAlign: 'center',
+        },
+
+    
+
+    });
